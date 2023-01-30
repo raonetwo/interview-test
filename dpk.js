@@ -5,7 +5,7 @@ const getPartitionKeyFromEvent = (event) => {
     if(typeof event.partitionKey != "string") {
         event.partitionKey = JSON.stringify(event.partitionKey);
     }
-    if (JSON.stringify(event.partitionKey).length < MAX_PARTITION_KEY_LENGTH) {
+    if (event.partitionKey < MAX_PARTITION_KEY_LENGTH) {
         return event.partitionKey;
     } else {
         return crypto.createHash("sha3-512").update(event.partitionKey).digest("hex");
